@@ -30,6 +30,9 @@ import {
   Palette,
   Mail,
   Phone,
+  Landmark,
+  ArrowLeftRight,
+  Send,
 } from "lucide-react";
 
 interface SubNavItem {
@@ -46,11 +49,70 @@ interface NavItem {
 }
 
 const superAdminNav: NavItem[] = [
-  { title: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   {
-    title: "Users",
+    title: "Dashboard",
+    href: "/admin/dashboard",
+    icon: LayoutDashboard,
+  },
+
+  {
+    title: "User Management",
     icon: Users,
-    subItems: [{ title: "All Users", href: "/admin/users", icon: Users }],
+    subItems: [
+      {
+        title: "All Users",
+        href: "/admin/users",
+        icon: Users,
+      },
+    ],
+  },
+
+  {
+    title: "Senders",
+    icon: UserCircle,
+    subItems: [
+      {
+        title: "All Senders",
+        href: "/admin/senders",
+        icon: UserCircle,
+      },
+    ],
+  },
+
+  {
+    title: "Receivers",
+    icon: Landmark,
+    subItems: [
+      {
+        title: "All Receivers",
+        href: "/admin/receivers",
+        icon: Landmark,
+      },
+    ],
+  },
+
+  {
+    title: "Transactions",
+    icon: ArrowLeftRight,
+    subItems: [
+      {
+        title: "All Transactions",
+        href: "/admin/transactions",
+        icon: ArrowLeftRight,
+      },
+    ],
+  },
+
+  {
+    title: "Send Money",
+    icon: Send,
+    subItems: [
+      {
+        title: "New Transfer",
+        href: "/admin/send-money",
+        icon: Send,
+      },
+    ],
   },
 ];
 
