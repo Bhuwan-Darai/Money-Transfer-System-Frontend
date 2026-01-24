@@ -52,6 +52,31 @@ const superAdminNav: NavItem[] = [
     icon: Users,
     subItems: [{ title: "All Users", href: "/admin/users", icon: Users }],
   },
+  {
+    title: "Senders",
+    icon: CreditCard,
+    subItems: [
+      { title: "All Senders", href: "/admin/senders", icon: CreditCard },
+    ],
+  },
+  {
+    title: "Receivers",
+    icon: CreditCard,
+    subItems: [
+      { title: "All Receivers", href: "/admin/receivers", icon: CreditCard },
+    ],
+  },
+  {
+    title: "Transactions",
+    icon: CreditCard,
+    subItems: [
+      {
+        title: "All Transactions",
+        href: "/admin/transactions",
+        icon: CreditCard,
+      },
+    ],
+  },
 ];
 
 const clientNav: NavItem[] = [
