@@ -15,6 +15,7 @@ import ManageUsers from "./pages/admin/MangeUser";
 import SenderPage from "./pages/senders/SendersPage";
 import ReceiverPage from "./pages/receivers/ReceiversPage";
 import TransactionListPage from "./pages/TransactionalListPage";
+import SendMoneyPage from "./pages/SendMoneyPage";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
                 path="admin/transactions"
                 element={<TransactionListPage />}
               />
+              <Route path="admin/send-money" element={<SendMoneyPage />} />
             </Route>
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["client"]} />}>

@@ -30,6 +30,9 @@ import {
   Palette,
   Mail,
   Phone,
+  Landmark,
+  ArrowLeftRight,
+  Send,
 } from "lucide-react";
 
 interface SubNavItem {
@@ -46,34 +49,68 @@ interface NavItem {
 }
 
 const superAdminNav: NavItem[] = [
-  { title: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   {
-    title: "Users",
-    icon: Users,
-    subItems: [{ title: "All Users", href: "/admin/users", icon: Users }],
+    title: "Dashboard",
+    href: "/admin/dashboard",
+    icon: LayoutDashboard,
   },
+
+  {
+    title: "User Management",
+    icon: Users,
+    subItems: [
+      {
+        title: "All Users",
+        href: "/admin/users",
+        icon: Users,
+      },
+    ],
+  },
+
   {
     title: "Senders",
-    icon: CreditCard,
+    icon: UserCircle,
     subItems: [
-      { title: "All Senders", href: "/admin/senders", icon: CreditCard },
+      {
+        title: "All Senders",
+        href: "/admin/senders",
+        icon: UserCircle,
+      },
     ],
   },
+
   {
     title: "Receivers",
-    icon: CreditCard,
+    icon: Landmark,
     subItems: [
-      { title: "All Receivers", href: "/admin/receivers", icon: CreditCard },
+      {
+        title: "All Receivers",
+        href: "/admin/receivers",
+        icon: Landmark,
+      },
     ],
   },
+
   {
     title: "Transactions",
-    icon: CreditCard,
+    icon: ArrowLeftRight,
     subItems: [
       {
         title: "All Transactions",
         href: "/admin/transactions",
-        icon: CreditCard,
+        icon: ArrowLeftRight,
+      },
+    ],
+  },
+
+  {
+    title: "Send Money",
+    icon: Send,
+    subItems: [
+      {
+        title: "New Transfer",
+        href: "/admin/send-money",
+        icon: Send,
       },
     ],
   },

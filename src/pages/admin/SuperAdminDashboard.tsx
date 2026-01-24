@@ -1,25 +1,20 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Building2,
   Users,
-  CreditCard,
   DollarSign,
   TrendingUp,
   ArrowUpRight,
-  ArrowDownRight,
+  Send,
+  UserPlus,
 } from "lucide-react";
 
-import { mockDashboardStats, mockCompanies } from "@/data/mockData";
-
-import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { StatusBadge } from "@/components/dashboard/StatusBadge";
-import { StatsCard } from "@/components/dashboard/StatsCard";
+import { useAuthStore } from "@/store/authStore";
 
 export const SuperAdminDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const stats = mockDashboardStats;
+  const { user } = useAuthStore();
 
   return (
     <div className="space-y-6">
@@ -27,200 +22,152 @@ export const SuperAdminDashboard: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">
-            Dashboard Overview
+            Welcome back,{" "}
+            {`${user?.first_name} ${user?.last_name}` || user?.email || "User"}!
           </h1>
           <p className="text-muted-foreground">
-            Welcome back! Here's what's happening today.
+            Banking System - Manage users, senders, receivers, and transactions
           </p>
         </div>
-        <Button onClick={() => navigate("/super-admin/companies")}>
-          View All Companies
-        </Button>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <StatsCard
-          title="Total Companies"
-          value={stats.totalCompanies}
-          icon={Building2}
-          trend={8.2}
-          trendLabel="vs last month"
-        />
-        <StatsCard
-          title="Total Users"
-          value={stats.totalUsers.toLocaleString()}
-          icon={Users}
-          trend={12.5}
-          trendLabel="vs last month"
-        />
-        <StatsCard
-          title="Active Subscriptions"
-          value={stats.activeSubscriptions}
-          icon={CreditCard}
-          trend={4.1}
-          trendLabel="vs last month"
-        />
-        <StatsCard
-          title="Monthly Revenue"
-          value={`$${stats.monthlyRevenue.toLocaleString()}`}
-          icon={DollarSign}
-          trend={15.3}
-          trendLabel="vs last month"
-        />
-      </div>
-
-      {/* Charts and Tables */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* Recent Companies */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-lg font-semibold">
-              Recent Companies
-            </CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate("/super-admin/companies")}
-            >
-              View all
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {mockCompanies.slice(0, 5).map((company) => (
-                <div
-                  key={company.id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Building2 className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm">{company.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {company.employeeCount} employees
-                      </p>
-                    </div>
-                  </div>
-                  <StatusBadge status={company.status} />
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Recent Users */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-lg font-semibold">
-              Recent Users
-            </CardTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate("/super-admin/users")}
-            >
-              View all
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <p>User's</p>
-              {/* {mockUsers.slice(0, 5).map((user) => (
-                <div
-                  key={user.id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-sm font-medium text-primary">
-                        {user.name.split(' ').map(n => n[0]).join('')}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="font-medium text-sm">{user.name}</p>
-                      <p className="text-xs text-muted-foreground">{user.email}</p>
-                    </div>
-                  </div>
-                  <StatusBadge status={user.status} />
-                </div>
-              ))} */}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Activity Feed */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">
-            Recent Activity
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {[
-              {
-                action: "New company registered",
-                company: "Digital Dynamics",
-                time: "2 hours ago",
-                icon: Building2,
-                positive: true,
-              },
-              {
-                action: "Subscription upgraded",
-                company: "TechStart Inc",
-                time: "4 hours ago",
-                icon: TrendingUp,
-                positive: true,
-              },
-              {
-                action: "User account deactivated",
-                company: "Global Solutions",
-                time: "6 hours ago",
-                icon: Users,
-                positive: false,
-              },
-              {
-                action: "New subscription started",
-                company: "Innovation Labs",
-                time: "1 day ago",
-                icon: CreditCard,
-                positive: true,
-              },
-            ].map((activity, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors"
-              >
-                <div
-                  className={`p-2 rounded-lg ${activity.positive ? "bg-success/10" : "bg-destructive/10"}`}
-                >
-                  <activity.icon
-                    className={`w-4 h-4 ${activity.positive ? "text-success" : "text-destructive"}`}
-                  />
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">{activity.action}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {activity.company}
-                  </p>
-                </div>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  {activity.positive ? (
-                    <ArrowUpRight className="w-3 h-3 text-success" />
-                  ) : (
-                    <ArrowDownRight className="w-3 h-3 text-destructive" />
-                  )}
-                  {activity.time}
-                </div>
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card
+          className="hover:shadow-lg transition-shadow cursor-pointer"
+          onClick={() => navigate("/admin/users")}
+        >
+          <CardContent className="pt-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-blue-100 rounded-lg">
+                <Users className="h-6 w-6 text-blue-600" />
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              <div>
+                <p className="text-sm text-muted-foreground">Manage</p>
+                <h3 className="text-lg font-semibold">Users</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card
+          className="hover:shadow-lg transition-shadow cursor-pointer"
+          onClick={() => navigate("/admin/senders")}
+        >
+          <CardContent className="pt-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-green-100 rounded-lg">
+                <UserPlus className="h-6 w-6 text-green-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Manage</p>
+                <h3 className="text-lg font-semibold">Senders</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card
+          className="hover:shadow-lg transition-shadow cursor-pointer"
+          onClick={() => navigate("/admin/receivers")}
+        >
+          <CardContent className="pt-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-purple-100 rounded-lg">
+                <Users className="h-6 w-6 text-purple-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Manage</p>
+                <h3 className="text-lg font-semibold">Receivers</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card
+          className="hover:shadow-lg transition-shadow cursor-pointer"
+          onClick={() => navigate("/admin/transactions")}
+        >
+          <CardContent className="pt-6">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-orange-100 rounded-lg">
+                <Send className="h-6 w-6 text-orange-600" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Send</p>
+                <h3 className="text-lg font-semibold">Money</h3>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Stats Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Total Users
+            </CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">1,234</div>
+            <p className="text-xs text-muted-foreground flex items-center mt-1">
+              <TrendingUp className="h-3 w-3 mr-1 text-green-500" />
+              <span className="text-green-500">+12%</span> from last month
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Total Transactions
+            </CardTitle>
+            <ArrowUpRight className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">5,678</div>
+            <p className="text-xs text-muted-foreground flex items-center mt-1">
+              <TrendingUp className="h-3 w-3 mr-1 text-green-500" />
+              <span className="text-green-500">+8%</span> from last month
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Total Volume
+            </CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">$1.2M</div>
+            <p className="text-xs text-muted-foreground flex items-center mt-1">
+              <TrendingUp className="h-3 w-3 mr-1 text-green-500" />
+              <span className="text-green-500">+23%</span> from last month
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Active Senders
+            </CardTitle>
+            <Send className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">892</div>
+            <p className="text-xs text-muted-foreground flex items-center mt-1">
+              <TrendingUp className="h-3 w-3 mr-1 text-green-500" />
+              <span className="text-green-500">+5%</span> from last month
+            </p>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
