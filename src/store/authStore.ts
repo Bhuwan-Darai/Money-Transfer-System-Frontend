@@ -1,39 +1,45 @@
-import type { User } from "@/types/types";
+import type { UserResponse } from "@/hooks/auth/useAuth";
+// import type { User } from "@/types/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface AuthState {
-  user: User | null;
+  user: UserResponse | null;
   token: string | null;
   isAuthenticated: boolean;
-  register: (user: User, token: string) => void;
+
+  login: (user: UserResponse | null, token: string) => void;
   logout: () => void;
 }
 
-type EmailStore = {
-  email: string;
-  setEmail: (email: string) => void;
-};
-
-export const useAuthStore = create<AuthState & EmailStore>()(
+export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
       token: null,
       isAuthenticated: false,
-      register: (user: User, token: string) => {
-        set({ user, token, isAuthenticated: true });
-      },
-      logout: () => {
-        set({ user: null, token: null, isAuthenticated: false });
-      },
-      email: "",
-      setEmail: (email: string) => {
-        set({ email });
-      },
+
+      login: (user, token: string) =>
+        set({
+          user,
+          token,
+          isAuthenticated: true,
+        }),
+
+      logout: () =>
+        set({
+          user: null,
+          token: null,
+          isAuthenticated: false,
+        }),
     }),
     {
       name: "auth-storage",
+      partialize: (state) => ({
+        token: state.token,
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
+      }),
     },
   ),
 );

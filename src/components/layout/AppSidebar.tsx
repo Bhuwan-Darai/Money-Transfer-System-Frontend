@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-// import { useAuthStore } from "@/store/authStore";
+import { useAuthStore } from "@/store/authStore";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
   Collapsible,
@@ -46,155 +46,16 @@ interface NavItem {
 }
 
 const superAdminNav: NavItem[] = [
-  { title: "Dashboard", href: "/super-admin", icon: LayoutDashboard },
-  {
-    title: "Companies",
-    icon: Building2,
-    subItems: [
-      {
-        title: "All Companies",
-        href: "/super-admin/companies",
-        icon: Building2,
-      },
-      {
-        title: "Add Company",
-        href: "/super-admin/companies/add",
-        icon: UserPlus,
-      },
-    ],
-  },
+  { title: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   {
     title: "Users",
     icon: Users,
-    subItems: [
-      { title: "All Users", href: "/super-admin/users", icon: Users },
-      { title: "User Roles", href: "/super-admin/users/roles", icon: UserCog },
-    ],
-  },
-  {
-    title: "Plans",
-    icon: CreditCard,
-    subItems: [
-      { title: "All Plans", href: "/super-admin/plans", icon: CreditCard },
-      {
-        title: "Features",
-        href: "/super-admin/plans/features",
-        icon: ListChecks,
-      },
-    ],
-  },
-  {
-    title: "Settings",
-    icon: Settings,
-    subItems: [
-      { title: "General", href: "/super-admin/settings", icon: Settings },
-      {
-        title: "Notifications",
-        href: "/super-admin/settings/notifications",
-        icon: Bell,
-      },
-      { title: "Security", href: "/super-admin/settings/security", icon: Lock },
-    ],
-  },
-];
-
-const companyAdminNav: NavItem[] = [
-  { title: "Dashboard", href: "/company-admin", icon: LayoutDashboard },
-  {
-    title: "Employees",
-    icon: Users,
-    subItems: [
-      { title: "All Employees", href: "/company-admin/employees", icon: Users },
-      {
-        title: "Add Employee",
-        href: "/company-admin/employees/add",
-        icon: UserPlus,
-      },
-      {
-        title: "Departments",
-        href: "/company-admin/employees/departments",
-        icon: Building2,
-      },
-    ],
-  },
-  {
-    title: "Roles & Permissions",
-    icon: Shield,
-    subItems: [
-      { title: "Roles", href: "/company-admin/roles", icon: Shield },
-      {
-        title: "Permissions",
-        href: "/company-admin/roles/permissions",
-        icon: Lock,
-      },
-    ],
-  },
-  {
-    title: "Subscription",
-    icon: CreditCard,
-    subItems: [
-      {
-        title: "Current Plan",
-        href: "/company-admin/subscription",
-        icon: CreditCard,
-      },
-      {
-        title: "Billing",
-        href: "/company-admin/subscription/billing",
-        icon: Receipt,
-      },
-    ],
-  },
-  {
-    title: "Settings",
-    icon: Settings,
-    subItems: [
-      {
-        title: "Company Profile",
-        href: "/company-admin/settings",
-        icon: Building2,
-      },
-      {
-        title: "Appearance",
-        href: "/company-admin/settings/appearance",
-        icon: Palette,
-      },
-      {
-        title: "Notifications",
-        href: "/company-admin/settings/notifications",
-        icon: Bell,
-      },
-    ],
-  },
-];
-
-const employeeNav: NavItem[] = [
-  { title: "Dashboard", href: "/employee", icon: LayoutDashboard },
-  {
-    title: "Tasks",
-    icon: Briefcase,
-    subItems: [
-      { title: "My Tasks", href: "/employee/tasks", icon: Briefcase },
-      {
-        title: "Completed",
-        href: "/employee/tasks/completed",
-        icon: ListChecks,
-      },
-    ],
-  },
-  { title: "Reports", href: "/employee/reports", icon: FileText },
-  {
-    title: "Profile",
-    icon: UserCircle,
-    subItems: [
-      { title: "My Profile", href: "/employee/profile", icon: UserCircle },
-      { title: "Settings", href: "/employee/profile/settings", icon: Settings },
-    ],
+    subItems: [{ title: "All Users", href: "/admin/users", icon: Users }],
   },
 ];
 
 const clientNav: NavItem[] = [
-  { title: "Dashboard", href: "/client", icon: LayoutDashboard },
+  { title: "Dashboard", href: "/client/dashboard", icon: LayoutDashboard },
   {
     title: "Services",
     icon: Briefcase,
@@ -219,18 +80,18 @@ const clientNav: NavItem[] = [
 ];
 
 export default function AppSidebar() {
-  //   const { user, logout } = useAuthStore();
-  const user = {
-    role: "super_admin",
-    name: "John Doe",
-  };
+  const { user, logout } = useAuthStore();
+  // const user = {
+  //   role: "super_admin",
+  //   name: "John Doe",
+  // };
   const location = useLocation();
   const navigate = useNavigate();
   const [openMenus, setOpenMenus] = useState<string[]>([]);
 
   const getNavItems = (): NavItem[] => {
     switch (user?.role) {
-      case "super_admin":
+      case "bank_admin":
         return superAdminNav;
       case "client":
         return clientNav;
@@ -242,14 +103,14 @@ export default function AppSidebar() {
   const navItems = getNavItems();
 
   const handleLogout = () => {
-    // logout();
+    logout();
     navigate("/login");
   };
 
   const getRoleLabel = () => {
     switch (user?.role) {
-      case "super_admin":
-        return "Super Admin";
+      case "bank_admin":
+        return "Bank Admin";
       case "client":
         return "Client";
       default:
@@ -279,12 +140,7 @@ export default function AppSidebar() {
       {/* Logo */}
       <div className="flex items-center h-16 px-4 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center">
-            <span className="text-sidebar-primary-foreground font-bold text-sm">
-              S
-            </span>
-          </div>
-          <span className="font-semibold text-lg">SaaSBoard</span>
+          <span className="font-semibold text-lg">Banking System</span>
         </div>
       </div>
 
@@ -370,7 +226,7 @@ export default function AppSidebar() {
       {/* User section */}
       <div className="p-3 border-t border-sidebar-border">
         <div className="px-3 py-2 mb-2">
-          <p className="text-sm font-medium truncate">{user?.name}</p>
+          <p className="text-sm font-medium truncate">{`${user?.first_name} ${user?.last_name}`}</p>
           <p className="text-xs text-sidebar-muted">{getRoleLabel()}</p>
         </div>
         <Button

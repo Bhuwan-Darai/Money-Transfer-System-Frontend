@@ -1,4 +1,4 @@
-export type UserRole = "super_admin" | "client";
+export type UserRole = "bank_admin" | "client";
 
 export interface User {
   id: string;
@@ -7,8 +7,19 @@ export interface User {
   role: UserRole;
   // companyId?: string;
   // avatar?: string;
-  // status: 'active' | 'inactive';
-  // createdAt: string;
+  status: "active" | "inactive";
+  createdAt: string;
+}
+
+export interface ClientUser {
+  user_id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone: string | null;
+  role: UserRole;
+  is_active: boolean;
+  created_at: string;
 }
 
 export interface Company {

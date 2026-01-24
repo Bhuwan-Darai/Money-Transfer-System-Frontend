@@ -100,53 +100,53 @@ export const mockPlans: Plan[] = [
   },
 ];
 
-// export const mockUsers: User[] = [
-//   {
-//     id: 'user_1',
-//     email: 'john@acme.com',
-//     name: 'John Smith',
-//     role: 'client',
-//     companyId: '',
-//     status: 'active',
-//     createdAt: '2024-01-15',
-//   },
-//   {
-//     id: 'user_2',
-//     email: 'jane@acme.com',
-//     name: 'Jane Doe',
-//     role: 'employee',
-//     companyId: 'comp_1',
-//     status: 'active',
-//     createdAt: '2024-01-20',
-//   },
-//   {
-//     id: 'user_3',
-//     email: 'mike@techstart.io',
-//     name: 'Mike Johnson',
-//     role: 'company_admin',
-//     companyId: 'comp_2',
-//     status: 'active',
-//     createdAt: '2024-02-20',
-//   },
-//   {
-//     id: 'user_4',
-//     email: 'sarah@techstart.io',
-//     name: 'Sarah Wilson',
-//     role: 'employee',
-//     companyId: 'comp_2',
-//     status: 'active',
-//     createdAt: '2024-02-25',
-//   },
-//   {
-//     id: 'user_5',
-//     email: 'tom@globalsol.com',
-//     name: 'Tom Brown',
-//     role: 'company_admin',
-//     companyId: 'comp_3',
-//     status: 'inactive',
-//     createdAt: '2024-03-10',
-//   },
-// ];
+export const mockUsers: any[] = [
+  {
+    id: "user_1",
+    email: "john@acme.com",
+    name: "John Smith",
+    role: "client",
+    companyId: "",
+    status: "active",
+    createdAt: "2024-01-15",
+  },
+  {
+    id: "user_2",
+    email: "jane@acme.com",
+    name: "Jane Doe",
+    role: "employee",
+    companyId: "comp_1",
+    status: "active",
+    createdAt: "2024-01-20",
+  },
+  {
+    id: "user_3",
+    email: "mike@techstart.io",
+    name: "Mike Johnson",
+    role: "company_admin",
+    companyId: "comp_2",
+    status: "active",
+    createdAt: "2024-02-20",
+  },
+  {
+    id: "user_4",
+    email: "sarah@techstart.io",
+    name: "Sarah Wilson",
+    role: "employee",
+    companyId: "comp_2",
+    status: "active",
+    createdAt: "2024-02-25",
+  },
+  {
+    id: "user_5",
+    email: "tom@globalsol.com",
+    name: "Tom Brown",
+    role: "company_admin",
+    companyId: "comp_3",
+    status: "inactive",
+    createdAt: "2024-03-10",
+  },
+];
 
 export const mockPermissions: Permission[] = [
   {
